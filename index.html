@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boligadministration</title>
+    <link rel="stylesheet" href="styles/mystyle.css">
+</head>
+
+<body>
+    <main>
+        <h1>Boligadministration</h1>
+        <div class="header">
+            <div>
+                <button type="button" class="button" id="addTenantButton">Add tenant</button>
+                <button type="button" class="button" id="showAllTenantsButton">Show all tenants</button>
+            </div>
+
+            <form id="tidSearchForm">
+                <input type="search" id="tidField" class="inputField" placeholder="Search tenant ID" required>
+                <button type="submit" class="button">Search</button>
+            </form>
+        </div>
+
+        <!-- Panel starts here -->
+        <aside class="searchPanel" id="searchPanel">
+            <span class="panelText" id="panelText">A D V A N C E D &nbsp;&nbsp; S E A R C H</span>
+            <form id="searchForm" class="searchForm">
+                <div class="closeCross" id="closeCross">X</div>
+
+                <label class="searchFormLabel" for="tenantID">Tenant ID</label>
+                <input type="number" id="tenantID" class="searchFormField">
+                
+                <label class="searchFormLabel" for="monthlyRent">Monthly rent</label>
+                <input type="number" id="monthlyRent" class="searchFormField">
+
+                <label class="searchFormLabel" for="tenantName">Tenant name</label>
+                <input type="text" id="tenantName" class="searchFormField">
+
+                <label class="searchFormLabel" for="availableFrom">Available from</label>
+                <input type="text" id="availableFrom" class="searchFormField">
+
+                <label class="searchFormLabel" for="apartmentID">Apartment ID</label>
+                <input type="number" id="apartmentID" class="searchFormField">
+
+                <label class="searchFormLabel" for="deposit">Deposit</label>
+                <input type="number" id="deposit" class="searchFormField">
+
+                <br><br>
+
+                <div class="searchFormPanel">
+                    <button type="reset" class="searchFormButton">Reset</button>
+                    <button type="submit" class="searchFormButton">Apply</button>
+                </div>
+            </form> 
+        </aside>
+        <!-- Panel ends here -->
+
+        <!-- Add guitar dialog starts here -->
+        <dialog id="tenantDialog">
+            <!-- dialog prevents redirection to a new page -->
+            <form method="dialog" id="tenantDialogForm">
+                <fieldset>
+                    <legend>Add new tenant</legend>
+                    <label for="tidfield">Tenant ID</label>
+                    <input type="text" class="inputField dialogField" id="tidfield" placeholder="Type in tenant ID" required>
+
+                    <label for="monthlyrentfield">Monthly Rent</label>
+                    <input type="text" class="inputField dialogField" id="monthlyrentfield" placeholder="Type in monthly rent" required>
+
+                    <label for="tenantnamefield">Tenant Name</label>
+                    <input type="text" class="inputField dialogField" id="tenantnamefield" placeholder="Type in tenant name" required>
+
+                    <label for="availablefromfield">Available from</label>
+                    <input type="text" class="inputField dialogField" id="availablefromfield" placeholder="Type in available from date (format DD-MM-YEAR)" required>
+
+                    <label for="apartmentidfield">Apartment ID</label>
+                    <input type="text" class="inputField dialogField" id="apartmentidfield" placeholder="Type in apartment ID" required>
+
+                    <label for="depositfield">Deposit</label>
+                    <input type="text" class="inputField dialogField" id="depositfield" placeholder="Type in deposit" required>
+
+                    <br><br>
+                    <div class="dialogBtnsPanel">
+                        <button type="button" id="cancelButton" class="button">Cancel</button>
+                        <button type="submit" id="saveButton" class="button">Save</button>
+                    </div>
+                </fieldset>
+            </form>
+        </dialog>
+        <!-- Add guitar dialog ends here -->
+
+        <!-- Delete confirmation dialog starts -->
+        <dialog id="confirmDialog">
+            <form method="dialog" id="confirmDialogForm">
+                <fieldset>
+                    <legend>Delete tenant?</legend>
+                    Do you really want to delete this tenant?
+                    <br><br>
+                    <div class="dialogBtnsPanel">
+                        <button type="submit" class="button">Yes</button>
+                        <button type="button" class="button" id="cancelConfirmBtn">No</button>
+                    </div>
+                </fieldset>
+            </form>
+        </dialog>
+        <!-- Delete confirmation end -->
+
+        <!-- Hidden field - a trick for storing information, the user shouldnt see -->
+        <form>
+            <input type="hidden" id="hiddenTidField">
+        </form>
+
+        <!-- table for tenants -->
+        <div class="tablelist">
+            <!-- <thead>
+                <tr>
+                    <th>Tenant ID</th>
+                    <th>Monthly Rent</th>
+                    <th>Tenant Name</th>
+                    <th>Available From</th>
+                    <th>Apartment ID</th>
+                    <th>Deposit (DKK)</th>
+                    <th>Action</th>
+                </tr>
+            </thead> -->
+            <div id="searchResult"></div>
+        </div>
+
+        <div id="snackbar">Some message will arrive here</div>
+    </main>
+
+<script type="module">
+    import Model from "./models/model.js"
+    import Controller from "./controllers/controller.js"
+    import View from "./views/view.js"
+
+    window.onload = function () {
+        const model = new Model();
+        const controller = new Controller();
+        const view = new View(controller);
+
+        // forbinder controlleren med model og view, den er mellemmand for
+        controller.initialize(model, view);
+    }
+
+</script>
+
+
+
+</body>
+
+</html>
